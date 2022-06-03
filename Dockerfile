@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/core/sdk:3.0-buster AS builder
+FROM mcr.microsoft.com/dotnet/core/sdk:6.0 AS builder
 WORKDIR /source
 
 COPY ./src/GitHubActionsDemo.sln .
@@ -14,7 +14,7 @@ RUN dotnet test ./GitHubActionsDemo.sln --configuration Release --no-restore
 
 RUN dotnet publish "./WebApi/WebApi.csproj" --output "../dist" --configuration Release --no-restore
 
-FROM mcr.microsoft.com/dotnet/core/aspnet:3.0-buster-slim
+FROM mcr.microsoft.com/dotnet/core/aspnet:6.0
 WORKDIR /app
 COPY --from=builder /dist . 
 EXPOSE 80 443
